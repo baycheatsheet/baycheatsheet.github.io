@@ -1,4 +1,8 @@
-﻿* {
+﻿:root {
+    --jump-red: #CA2030;
+}
+
+* {
     box-sizing: border-box;
     padding: 0px;
     margin: 0px;
@@ -6,13 +10,13 @@
     font-weight: 300;
     font-size: 1em;
     color: floralwhite;
-
 }
 
 body {
     background-color: #333333;
     height: 100vh;
     width: 100vw;
+    padding: 10px;
 }
 
 div {
@@ -20,7 +24,15 @@ div {
     padding: 10px;
     flex-direction: column;
     row-gap: 5px;
+    column-gap: 5px;
     border-radius: 1em;
+}
+
+div.rows {
+    padding-left: 0px;
+    padding-right: 0px;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 div.fill-page {
@@ -37,8 +49,30 @@ div.center-vertical {
 }
 
 div.light-bg {
-    background-color: #777777;
+    background-color: #5b5b5b;
 }
+
+div.question-bubble {
+    display: block;
+    padding: 20px;
+}
+
+div.question-bubble.white {
+    background-color: floralwhite;
+}
+
+div.question-bubble.white h3 {
+    color: #141212;
+}
+
+div.question-bubble.white h5 {
+    color: var(--jump-red);
+}
+
+div.question-bubble.white p {
+    color: #000000;
+}
+
 
 #home-wrapper {
     padding: 20px;
@@ -61,6 +95,10 @@ h1, h2, h3, h4, h5, h6 {
     color: floralwhite;
     text-transform: uppercase;
     padding-bottom: 10px;
+}
+
+h1.red, h2.red, h3.red, h4.red, h5.red, h6.red {
+    color: #ffd03d;
 }
 
 h1 {
@@ -94,7 +132,7 @@ h6 {
 
 p {
     font-size: 1rem;
-    font-weight: 300;
+    font-weight: 400;
     font-family: Roboto;
 }
 
@@ -110,6 +148,7 @@ button {
     letter-spacing: .4px;
     padding: 1px 12px 2.5px 12px;
     background-color: transparent;
+    align-self: start;
 }
 
 button:hover {
@@ -118,11 +157,12 @@ button:hover {
 }
 
 button.red {
-    background-color: crimson;
+    background-color: var(--jump-red);
     text-transform: uppercase;
     font-weight: 500;
     padding: 5px 12px 5px 12px;
     box-shadow: rgba(0, 0, 0, .5) 0px 2px 6px;
+    align-self: auto;
 }
 
 button.red:hover {
