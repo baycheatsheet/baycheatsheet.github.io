@@ -41,8 +41,6 @@ function refreshBubbles() {
 }
 
 function generateBubbles() {
-    alert("generating bubbles");
-
     var bubbleContainer = document.getElementById("bubble-container");
     var buttonContainer = document.getElementById("link-buttons");
 
