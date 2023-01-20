@@ -21,9 +21,8 @@ function loadEntry(entry) {
 
 function LinkButtonClick(elem) {
     var pageName = elem.innerHTML.toLowerCase();
-    var pageBubbles = PAGES[pageName];
     sessionStorage.setItem("pageName", pageName);
-    sessionStorage.setItem("pageBubbles", JSON.stringify(pageBubbles));
+    sessionStorage.setItem("pages", JSON.stringify(PAGES));
 
     var cmsPage = window.open("troubleTemplate.html", "_self");
 }

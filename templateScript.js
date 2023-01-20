@@ -1,12 +1,22 @@
 
-var pageName = sessionStorage.getItem("pageName");
-var pageEntry = JSON.parse(sessionStorage.getItem("pageBubbles"));
+var commandTitle = sessionStorage.getItem("commandTitle");
+sessionStorage.removeItem("commandTitle");
+
+if (commandTitle == undefined) {
+    var pageName = sessionStorage.getItem("pageName");
+}
+else {
+    var pageName = "basic commands";
+}
+
+var pageEntry = JSON.parse(sessionStorage.getItem("pages"))[pageName];
 
 var pageHeader = document.getElementById("page-name");
 pageHeader.innerHTML = pageName;
 
-var toggleButtons = [];
+var bubbles = {};
 var toggleOnValues = new Set();
+var toggleOffValues = new Set();
 
 try {
     generateBubbles();
@@ -16,26 +26,52 @@ catch (err) {
 }
 
 function toggleButtonClick(elem) {
-    var wasDeleted = toggleOnValues.delete(elem.innerHTML);
+    var buttonName = elem.innerHTML;
 
-    if (!wasDeleted) {
-        toggleOnValues.add(elem.innerHTML);
+    if (toggleOffValues.has(buttonName)) {
+        toggleOffValues.delete(buttonName);
+        toggleOnValues.add(buttonName);
         elem.classList.add("on");
     }
     else {
+        toggleOffValues.add(buttonName);
+        toggleOnValues.delete(buttonName);
         elem.classList.remove("on");
     }
 
-    refreshBubbles();
+    try {
+        refreshBubbles();
+    }
+    catch (err) {
+        alert(err.message);
+    }
 }
 
 function refreshBubbles() {
-    for (var button of toggleButtons) {
-        if (toggleOnValues.has(button.innerHTML)) {
-            //alert(button.innerHTML + " ON");
-        }
-        else {
-            //alert(button.innerHTML + " OFF");
+    if (toggleOnValues.size == 0) {
+        switchBubbles(toggleOffValues, true);
+    }
+    else {
+        switchBubbles(toggleOnValues, true);
+        switchBubbles(toggleOffValues, false);
+    }
+}
+
+// True displays the bubbles, False hides them
+function switchBubbles(bubbleList, turnOn) {
+    for (var link of bubbleList) {
+
+        var selectedBubbles = bubbles[link];
+
+        for (var bubble of selectedBubbles) {
+            if (turnOn) {
+                bubble.classList.remove("hidden");
+            }
+            else {
+                if (!bubble.classList.contains("hidden")) {
+                    bubble.classList.add("hidden");
+                }
+            }
         }
     }
 }
@@ -44,15 +80,36 @@ function generateBubbles() {
     var bubbleContainer = document.getElementById("bubble-container");
     var buttonContainer = document.getElementById("link-buttons");
 
+    var usedNames = [];
+
     for (var bubble of pageEntry.fields.bubbleChildren) {
         var bubbleName = bubble.fields.title;
 
-        if (!toggleButtons.includes(bubbleName)) {
-            makeToggleButton(bubbleName, buttonContainer);
+        if (!usedNames.includes(bubbleName)) {
+            var newButton = makeToggleButton(bubbleName, buttonContainer);
+            usedNames.push(newButton.innerHTML);
+
+            if (bubbleName == commandTitle) {
+                newButton.classList.add("on");
+                toggleOnValues.add(newButton.innerHTML);
+            }
+            else {
+                toggleOffValues.add(newButton.innerHTML);
+            }
         }
 
-        makeBubble(bubble.fields, bubbleContainer);
+        var newBubble = makeBubble(bubble.fields, bubbleContainer);
+        var bubbleGroup = bubbles[bubbleName];
+
+        if (bubbleGroup == undefined) {
+            bubbles[bubbleName] = [newBubble];
+        }
+        else {
+            bubbles[bubbleName].push(newBubble);
+        }
     }
+
+    refreshBubbles();
 }
 
 function makeToggleButton(buttonName, parent) {
@@ -63,7 +120,8 @@ function makeToggleButton(buttonName, parent) {
     newButton.innerHTML = buttonName;
 
     parent.appendChild(newButton);
-    toggleButtons.push(buttonName);
+
+    return newButton;
 }
 
 function makeBubble(fields, parent) {
@@ -76,12 +134,19 @@ function makeBubble(fields, parent) {
     wrapper.appendChild(title);
 
     var issue = document.createElement("h5");
-    issue.classList.add("red");
     issue.innerHTML = fields.issue;
     wrapper.appendChild(issue);
 
     var answer = document.createElement("p");
-    answer.innerHTML = fields.answer.content[0].data;
+    answer.innerHTML = renderRichText(fields.answer);
     wrapper.appendChild(answer);
+
+    return wrapper;
+}
+
+function linkToBasicCommand(buttonName) {
+    sessionStorage.setItem("commandTitle", buttonName);
+
+    var cmsPage = window.open("basicCommands.html", "_self");
 }
 
