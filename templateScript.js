@@ -1,28 +1,38 @@
 
 var commandTitle = sessionStorage.getItem("commandTitle");
-sessionStorage.removeItem("commandTitle");
 
-if (commandTitle == undefined) {
-    var pageName = sessionStorage.getItem("pageName");
+if (document.title == "BASIC COMMANDS") {
+    var pageName = "basic commands";
 }
 else {
-    var pageName = "basic commands";
+    var pageName = sessionStorage.getItem("pageName");
 }
 
 var pageEntry = JSON.parse(sessionStorage.getItem("pages"))[pageName];
 
 var pageHeader = document.getElementById("page-name");
 pageHeader.innerHTML = pageName;
+document.title = pageName.toUpperCase();
 
 var bubbles = {};
 var toggleOnValues = new Set();
 var toggleOffValues = new Set();
 
 try {
+    generateHeroImage();
     generateBubbles();
 }
 catch (err) {
     alert(err.name + " || " + err.message);
+}
+
+function generateHeroImage() {
+    if (pageEntry.fields.heroImage != undefined) {
+        var link = "https:" + pageEntry.fields.heroImage.fields.file.url;
+        var hero = document.getElementById("hero-image");
+
+        //hero.src = link;
+    }
 }
 
 function toggleButtonClick(elem) {
@@ -137,16 +147,19 @@ function makeBubble(fields, parent) {
     issue.innerHTML = fields.issue;
     wrapper.appendChild(issue);
 
-    var answer = document.createElement("p");
-    answer.innerHTML = renderRichText(fields.answer);
-    wrapper.appendChild(answer);
+    renderRichText(fields.answer, wrapper);
 
     return wrapper;
 }
 
-function linkToBasicCommand(buttonName) {
+function linkToBasicCommand(event) {
+    var buttonName = event.currentTarget.value;
     sessionStorage.setItem("commandTitle", buttonName);
 
     var cmsPage = window.open("basicCommands.html", "_self");
+}
+
+function removeCommandTitle() {
+    sessionStorage.removeItem("commandTitle");
 }
 

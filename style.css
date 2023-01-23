@@ -1,6 +1,8 @@
 ﻿:root {
     --jump-red: #CA2030;
     --jump-gold: #ffd03d;
+    --jump-black: #141212;
+    --jump-dark-grey: #333333;
 }
 
 * {
@@ -13,11 +15,16 @@
     color: floralwhite;
 }
 
+html {
+    height: 100%;
+}
+
 body {
-    background-color: #333333;
-    height: 100vh;
+    background-color: var(--jump-black);
+    display: flex;
+    justify-content: center;
+    min-height: 100%;
     width: 100vw;
-    padding: 10px;
 }
 
 div {
@@ -29,10 +36,32 @@ div {
     border-radius: 1em;
 }
 
-div.trouble-wrapper {
-    max-width: 600px;
-    width: 100%;
+div.nav {
+    display: flex;
+    position: static;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 0px;
+    border-radius: 0px;
+    width: 100%;
+    padding: 10px 0px 0px 10px;
+}
+
+div.trouble-wrapper {
+    position: relative;
+    max-width: 640px;
+    height: 100%;
+    width: 100%;
+    padding: 40px 20px;
+    background-color: var(--jump-dark-grey);
+    border-radius: 0px;
+}
+
+div.page-wrapper {
+    background-color: var(--jump-dark-grey);
+    width: 100%;
+    max-width: 700px;
+    border-radius: 0px;
 }
 
 div.rows {
@@ -50,6 +79,7 @@ div.fill-page {
 
 div.center-horizontal {
     align-items: center;
+    padding: 0px;
 }
 
 div.center-vertical {
@@ -74,7 +104,7 @@ div.basic-commands div.question-bubble {
 }
 
 div.basic-commands div.question-bubble h3 {
-    color: #141212;
+    color: var(--jump-black);
 }
 
 div.basic-commands div.question-bubble h5 {
@@ -148,10 +178,11 @@ h6 {
 }
 
 p {
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: 400;
     font-family: Roboto;
     white-space: pre-line;
+    padding-bottom: 2px;
 }
 
 a {
@@ -165,7 +196,17 @@ a:hover {
     cursor: pointer;
 }
 
-button {
+a.home-button {
+    position: absolute;
+    left: 30px;
+    top: 50px;
+}
+
+a.home-button.no-image {
+    position: static;
+}
+
+button, a.button {
     border: Solid;
     border-color: crimson;
     border-width: 2px;
@@ -180,7 +221,7 @@ button {
     align-self: start;
 }
 
-button:hover {
+button:hover, a.button:hover {
     background-color: rgba(255, 255, 255, .2);
     cursor: pointer;
 }
@@ -201,4 +242,11 @@ button.red {
 button.red:hover {
     background-color: rgba(240, 20, 60);
     border-color: rgba(240, 20, 60);
+}
+
+#hero-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 2rem;
 }

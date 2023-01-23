@@ -7,7 +7,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 
-    <title>Bay Cheatsheet</title>
+    <title>BASIC COMMANDS</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +16,13 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="center-horizontal">
+    <div class="center-horizontal page-wrapper">
         <div class="trouble-wrapper">
+            <div class="nav">
+                <a class="home-button no-image" href="index.html" onclick="removeCommandTitle()"><img src="images/BayTechCut.png" /></a>
+                <a class="button" href="troubleTemplate.html" onclick="removeCommandTitle()">back</a>
+            </div>
+
             <div class="center-horizontal">
                 <h2 id="page-name">PAGENAME HERE</h2>
                 <h2>Trouble Shooting</h2>
@@ -25,7 +30,7 @@
 
             <h4>What is the issue?</h4>
             <div id="link-buttons" class="rows">
-                
+
             </div>
 
             <div id="bubble-container" class="basic-commands">

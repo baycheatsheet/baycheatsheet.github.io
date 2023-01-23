@@ -1,3 +1,5 @@
+sessionStorage.removeItem("commandTitle");
+
 var client = contentful.createClient({
     space: 'k2un8xhj1nyv',
     environment: 'master', // defaults to 'master' if not set
