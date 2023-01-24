@@ -104,14 +104,10 @@ div.basic-commands div.question-bubble {
 }
 
 div.basic-commands div.question-bubble h3 {
-    color: var(--jump-black);
-}
-
-div.basic-commands div.question-bubble h5 {
     color: var(--jump-red);
 }
 
-div.basic-commands div.question-bubble p {
+div.basic-commands div.question-bubble p, div.basic-commands div.question-bubble li {
     color: #000000;
 }
 
@@ -177,12 +173,19 @@ h6 {
     text-align: center;
 }
 
-p {
+p, li, ul {
     font-size: .9rem;
     font-weight: 400;
     font-family: Roboto;
     white-space: pre-line;
     padding-bottom: 2px;
+}
+
+ul {
+    list-style-position: outside;
+    list-style-type: circle;
+    margin: 0px;
+    padding-left: 20px;
 }
 
 a {

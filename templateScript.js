@@ -143,9 +143,12 @@ function makeBubble(fields, parent) {
     title.innerHTML = fields.title;
     wrapper.appendChild(title);
 
-    var issue = document.createElement("h5");
-    issue.innerHTML = fields.issue;
-    wrapper.appendChild(issue);
+    var issueText = fields.issue;
+    if (issueText != undefined) {
+        var issue = document.createElement("h5");
+        issue.innerHTML = issueText;
+        wrapper.appendChild(issue);
+    }
 
     renderRichText(fields.answer, wrapper);
 
