@@ -38,10 +38,16 @@ function renderParagraph(node, parent, textType = "p") {
                 parent.appendChild(elem);
             }
             else {
-                openParagraph.innerHTML = openParagraph.innerHTML + nodeData.value;
+                openParagraph.insertAdjacentHTML("beforeend", nodeData.value);
             }
         }
         else if (nodeData.nodeType == "entry-hyperlink") {
+            if (openParagraph == undefined) {
+                var paragraph = document.createElement(textType);
+                parent.appendChild(paragraph);
+                openParagraph = paragraph;
+            }
+
             var linkedEntry = nodeData.data.target;
             var elem = document.createElement("a");
 
@@ -49,16 +55,7 @@ function renderParagraph(node, parent, textType = "p") {
             elem.value = linkedEntry.fields.title;
             elem.addEventListener("click", linkToBasicCommand);
 
-            if (openParagraph == undefined) {
-                var paragraph = document.createElement(textType);
-                parent.appendChild(paragraph);
-                openParagraph = paragraph;
-
-                paragraph.appendChild(elem);
-            }
-            else {
-                openParagraph.appendChild(elem);
-            }
+            openParagraph.appendChild(elem);
         }
     }
 }

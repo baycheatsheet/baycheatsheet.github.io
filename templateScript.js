@@ -19,8 +19,13 @@ var toggleOnValues = new Set();
 var toggleOffValues = new Set();
 
 try {
-    generateHeroImage();
-    generateBubbles();
+    if (pageEntry != undefined) {
+        generateHeroImage();
+
+        if (pageEntry.fields.bubbleChildren != undefined) {
+            generateBubbles();
+        }
+    }
 }
 catch (err) {
     alert(err.name + " || " + err.message);
@@ -31,7 +36,7 @@ function generateHeroImage() {
         var link = "https:" + pageEntry.fields.heroImage.fields.file.url;
         var hero = document.getElementById("hero-image");
 
-        //hero.src = link;
+        hero.src = link;
     }
 }
 

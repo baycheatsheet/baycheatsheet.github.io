@@ -52,7 +52,7 @@ div.trouble-wrapper {
     max-width: 640px;
     height: 100%;
     width: 100%;
-    padding: 40px 20px;
+    padding: 40px 10px;
     background-color: var(--jump-dark-grey);
     border-radius: 0px;
 }
@@ -201,7 +201,7 @@ a:hover {
 
 a.home-button {
     position: absolute;
-    left: 30px;
+    left: 20px;
     top: 50px;
 }
 
@@ -252,4 +252,14 @@ button.red:hover {
     height: 300px;
     object-fit: cover;
     border-radius: 2rem;
+}
+
+@media (max-width: 700px) {
+    div.trouble-wrapper {
+        padding: 20px 10px;
+    }
+
+    a.home-button {
+        top: 30px;
+    }
 }
