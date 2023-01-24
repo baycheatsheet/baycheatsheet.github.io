@@ -140,6 +140,7 @@ div.hidden {
 #bubble-container {
     padding: 0px;
     width: 100%;
+    row-gap: 10px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -147,11 +148,12 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
     color: floralwhite;
     text-transform: uppercase;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
 
 h1 {
     font-size: 3rem;
+    padding-bottom: 0px;
 }
 
 h2 {
@@ -184,7 +186,7 @@ p, li, ul {
     font-weight: 400;
     font-family: Roboto;
     white-space: pre-line;
-    padding-bottom: 2px;
+    padding-bottom: 5px;
 }
 
 ul {
@@ -192,6 +194,10 @@ ul {
     list-style-type: circle;
     margin: 0px;
     padding-left: 20px;
+}
+
+li {
+    padding-bottom: 0px;
 }
 
 a {
