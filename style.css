@@ -54,6 +54,13 @@ div.nav {
     padding: 10px 0px 0px 10px;
 }
 
+div.hero-wrapper {
+    display: block;
+    position: relative;
+    padding: 0px;
+    border-radius: 0px;
+}
+
 div.trouble-wrapper {
     position: relative;
     height: 100%;
@@ -156,6 +163,15 @@ h1 {
     padding-bottom: 0px;
 }
 
+h1.hero-title {
+    font-size: clamp(2.5rem, 10vw, 6rem);
+    color: rgba(255, 255, 255, .7);
+    position: absolute;
+    right: 20px;
+    top: 0px;
+    text-shadow: 0 0 .2rem rgba(0, 0, 0, 0.3);
+}
+
 h2 {
     font-size: 2.2rem;
 }
@@ -213,8 +229,8 @@ a:hover {
 
 a.home-button {
     position: absolute;
-    left: 20px;
-    top: 50px;
+    left: 10px;
+    top: 10px;
 }
 
 a.home-button.no-image {
@@ -274,8 +290,12 @@ button.red:hover {
     div.trouble-wrapper {
         padding: 20px 10px;
     }
+}
 
-    a.home-button {
-        top: 30px;
+@media (max-width: 500px) {
+    h1.hero-title {
+        top: auto;
+        bottom: 0px;
+        right: 20px;
     }
 }
