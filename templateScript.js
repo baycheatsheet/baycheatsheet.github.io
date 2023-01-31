@@ -9,10 +9,12 @@ else {
 }
 
 var pageEntry = JSON.parse(sessionStorage.getItem("pages"))[pageName];
-
-var pageHeader = document.getElementById("page-name");
-pageHeader.innerHTML = pageName;
-document.title = pageName.toUpperCase();
+try {
+    generatePageHeader(pageEntry);
+}
+catch (err) {
+    alert(err.message);
+}
 
 var bubbles = {};
 var toggleOnValues = new Set();
@@ -29,6 +31,20 @@ try {
 }
 catch (err) {
     alert(err.name + " || " + err.message);
+}
+
+function generatePageHeader(pageEntry) {
+    var pageName = pageEntry.fields.title;
+    var pageHeader = document.getElementById("page-name");
+
+    if (pageEntry.fields.displayTitle) {
+        pageHeader.innerHTML = pageName;
+    }
+    else {
+        pageHeader.classList.add("hidden");
+    }
+
+    document.title = pageName.toUpperCase();
 }
 
 function generateHeroImage() {

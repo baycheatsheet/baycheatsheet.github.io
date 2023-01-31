@@ -275,8 +275,30 @@ button.red:hover {
     border-color: rgba(240, 20, 60);
 }
 
+#back-button {
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+    padding: 0px;
+    width: 70px;
+    padding-top: 0px;
+}
+
+#back-button img {
+    width: 100%;
+    height: auto;
+}
+
+#back-button:hover img {
+    filter: brightness(1.1);
+}
+
 .pad-top {
     padding-top: 20px;
+}
+
+.hidden {
+    display: none;
 }
 
 #hero-image {

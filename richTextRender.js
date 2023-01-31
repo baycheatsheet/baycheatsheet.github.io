@@ -1,10 +1,16 @@
 
 function renderRichText(richText, parent) {
+    if (richText == undefined) {
+        return ["FAILURE"];
+    }
+
     var data = richText.content;
 
     for (var node of data) {
         renderNode(node, parent);
     }
+
+    return ["SUCCESS"]
 }
 
 function renderNode(node, parent) {
