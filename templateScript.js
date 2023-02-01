@@ -9,12 +9,6 @@ else {
 }
 
 var pageEntry = JSON.parse(sessionStorage.getItem("pages"))[pageName];
-try {
-    generatePageHeader(pageEntry);
-}
-catch (err) {
-    alert(err.message);
-}
 
 var bubbles = {};
 var toggleOnValues = new Set();
@@ -23,6 +17,7 @@ var toggleOffValues = new Set();
 try {
     if (pageEntry != undefined) {
         generateHeroImage();
+        generatePageHeader(pageEntry);
 
         if (pageEntry.fields.bubbleChildren != undefined) {
             generateBubbles();
