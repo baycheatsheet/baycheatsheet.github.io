@@ -131,17 +131,15 @@ div.hidden {
 
 #home-wrapper {
     padding: 20px;
-    height: 100%;
     width: 100%;
     max-width: 300px;
-    max-height: 600px;
 }
 
 #home-button-wrapper {
     width: 100%;
     max-width: 180px;
     height: 100%;
-    justify-content: space-between;
+    row-gap: clamp(5px, 1.5vh, 20px);
 }
 
 #bubble-container {
@@ -197,7 +195,7 @@ h6 {
     text-align: center;
 }
 
-p, li, ul {
+p, li, ul, ol {
     font-size: .9rem;
     font-weight: 400;
     font-family: Roboto;
@@ -212,8 +210,23 @@ ul {
     padding-left: 20px;
 }
 
+ol {
+    list-style-position: outside;
+    margin: 0px;
+    padding-left: 20px;
+}
+
 li {
     padding-bottom: 0px;
+}
+
+u, i, b {
+    color: inherit;
+    font-weight: inherit;
+}
+
+b {
+    font-weight: 700; 
 }
 
 a {
@@ -222,7 +235,7 @@ a {
     text-decoration: none;
 }
 
-a:hover {
+a:hover{
     color: var(--jump-red);
     cursor: pointer;
 }

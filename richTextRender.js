@@ -13,38 +13,40 @@ function renderRichText(richText, parent) {
     return ["SUCCESS"]
 }
 
+//render the node to html elements
 function renderNode(node, parent) {
-
+    //render node by its type
     if (node.nodeType == "paragraph") {
+        //plain text
         renderParagraph(node, parent);
     }
     else if (node.nodeType == "unordered-list") {
-        var unorderedList = document.createElement("ul");
-        parent.appendChild(unorderedList);
-
-        for (var nodeData of node.content) {
-            var listNode = nodeData.content[0];
-            if (listNode.nodeType == "paragraph") {
-                renderParagraph(listNode, unorderedList, textType = "li");
-            }
-        }
+        //unordered lists
+        renderList(node, parent, listType = "ul");
+    }
+    else if (node.nodeType == "ordered-list") {
+        renderList(node, parent, listType = "ol");
     }
 }
 
+//render paragraph elements
 function renderParagraph(node, parent, textType = "p") {
     var openParagraph = undefined;
 
     for (var nodeData of node.content) {
-
+        //render plain text
         if (nodeData.nodeType == "text") {
+            var innerHTML = renderMarks(nodeData);
+
             if (openParagraph == undefined) {
                 var elem = document.createElement(textType);
-                elem.innerHTML = nodeData.value;
-                openParagraph = elem;
+
                 parent.appendChild(elem);
+                elem.innerHTML = innerHTML;
+                openParagraph = elem;
             }
             else {
-                openParagraph.insertAdjacentHTML("beforeend", nodeData.value);
+                openParagraph.insertAdjacentHTML("beforeend", innerHTML);
             }
         }
         else if (nodeData.nodeType == "entry-hyperlink") {
@@ -57,11 +59,49 @@ function renderParagraph(node, parent, textType = "p") {
             var linkedEntry = nodeData.data.target;
             var elem = document.createElement("a");
 
-            elem.innerHTML = nodeData.content[0].value;
+            elem.innerHTML = renderMarks(nodeData.content[0]);
             elem.value = linkedEntry.fields.title;
             elem.addEventListener("click", linkToBasicCommand);
 
             openParagraph.appendChild(elem);
         }
     }
+}
+
+//render unordered and ordered lists, default unordered list
+function renderList(node, parent, listType = "ul") {
+    var listElem = document.createElement(listType);
+    parent.appendChild(listElem);
+
+    for (var nodeData of node.content) {
+        var listNode = nodeData.content[0];
+        if (listNode.nodeType == "paragraph") {
+            renderParagraph(listNode, listElem, textType = "li");
+        }
+    }
+}
+
+//render underlines, bolds, italics, etc.
+function renderMarks(nodeData) {
+    var innerHTML = nodeData.value;
+
+    if (nodeData.marks.length == 0) {
+        return innerHTML;
+    }
+
+    var mark = document.createElement("mark");
+
+    for (var mark of nodeData.marks) {
+        if (mark.type == "underline") {
+            innerHTML = "<u>" + innerHTML + "</u>";
+        }
+        else if (mark.type == "italic") {
+            innerHTML = "<i>" + innerHTML + "</i>";
+        }
+        else if (mark.type == "bold") {
+            innerHTML = "<b>" + innerHTML + "</b>";
+        }
+    }
+    
+    return innerHTML;
 }
