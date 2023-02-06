@@ -235,6 +235,10 @@ a {
     text-decoration: none;
 }
 
+a.asset {
+    color: rgb(0, 225, 250);
+}
+
 a:hover{
     color: var(--jump-red);
     cursor: pointer;
