@@ -187,25 +187,39 @@ function linkToAsset(event) {
         parent = parent.parentElement;
     }
 
-    var image = findImageChild(parent);
+    var linkImage = findImageLink(parent);
 
-    if (image == null) {
-        image = document.createElement("img");
-        image.classList.add("inline");
-        parent.appendChild(image);
-    }
-
-    if (image.src == assetUrl) {
-        parent.removeChild(image);
+    if (linkImage == null) {
+        linkImage = createImageLink(parent, assetUrl);
     }
     else {
-        image.src = assetUrl;
+        if (linkImage.href == assetUrl) {
+            parent.removeChild(linkImage);
+        }
+        else {
+            linkImage.href = assetUrl;
+            linkImage.firstChild.src = assetUrl;
+        }
     }
 }
 
-function findImageChild(parent) {
+function createImageLink(parent, url) {
+    var a = document.createElement("a");
+    a.href = url;
+    a.setAttribute("target", "_blank");
+    parent.appendChild(a);
+
+    image = document.createElement("img");
+    image.classList.add("inline");
+    image.src = url;
+    a.appendChild(image);
+
+    return a;
+}
+
+function findImageLink(parent) {
     for (var child of parent.children) {
-        if (child.nodeName == "IMG") {
+        if (child.nodeName == "A") {
             return child;
         }
     }
