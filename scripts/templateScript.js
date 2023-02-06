@@ -87,7 +87,8 @@ function refreshBubbles() {
 function switchBubbles(bubbleList, turnOn) {
     for (var link of bubbleList) {
 
-        var selectedBubbles = bubbles[link];
+        var parsedLink = unEntity(link);
+        var selectedBubbles = bubbles[parsedLink];
 
         for (var bubble of selectedBubbles) {
             if (turnOn) {
@@ -100,6 +101,10 @@ function switchBubbles(bubbleList, turnOn) {
             }
         }
     }
+}
+
+function unEntity(str) {
+    return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 }
 
 function generateBubbles() {
@@ -181,43 +186,65 @@ function linkToBasicCommand(event) {
 function linkToAsset(event) {
     var link = event.currentTarget;
     var assetUrl = link.value;
+    var assetType = link.getAttribute("data-asset-type");
 
     var parent = link.parentElement;
     while (parent.nodeName != "DIV") {
         parent = parent.parentElement;
     }
 
-    var linkImage = findImageLink(parent);
+    var linkAsset = findAssetLink(parent);
 
-    if (linkImage == null) {
-        linkImage = createImageLink(parent, assetUrl);
+    if (linkAsset == null) {
+        linkAsset = createAssetLink(parent, assetUrl, assetType);
     }
     else {
-        if (linkImage.href == assetUrl) {
-            parent.removeChild(linkImage);
-        }
-        else {
-            linkImage.href = assetUrl;
-            linkImage.firstChild.src = assetUrl;
+        parent.removeChild(linkAsset);
+
+        if (linkAsset.href != assetUrl) {
+            createAssetLink(parent, assetUrl, assetType);
         }
     }
 }
 
-function createImageLink(parent, url) {
+function createAssetLink(parent, url, type = "image") {
     var a = document.createElement("a");
     a.href = url;
     a.setAttribute("target", "_blank");
     parent.appendChild(a);
 
-    image = document.createElement("img");
-    image.classList.add("inline");
-    image.src = url;
-    a.appendChild(image);
+    if (type.includes("image")) {
+        createImage(a, url);
+    }
+    else if (type.includes("video")) {
+        createVideo(a, url);
+    }
+    else {
+        createImage(a, url);
+    }
 
     return a;
 }
 
-function findImageLink(parent) {
+function createVideo(parent, url) {
+    var video = document.createElement("video");
+    video.controls = true;
+    video.autoplay = true;
+    video.classList.add("inline");
+    video.src = url;
+
+    parent.appendChild(video);
+}
+
+function createImage(parent, url) {
+    image = document.createElement("img");
+    image.classList.add("inline");
+    image.src = url;
+
+    parent.appendChild(image);
+}
+
+function findAssetLink(parent) {
     for (var child of parent.children) {
         if (child.nodeName == "A") {
             return child;

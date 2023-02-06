@@ -68,8 +68,12 @@ function renderParagraph(node, parent, textType = "p") {
             var linkedAsset = nodeData.data.target;
             var elem = document.createElement("a");
 
+            var assetType = linkedAsset.fields.file.contentType;
+
+            elem.classList.add("asset");
             elem.innerHTML = renderMarks(nodeData.content[0]);
             elem.value = "https:" + linkedAsset.fields.file.url;
+            elem.setAttribute("data-asset-type", assetType);
             elem.addEventListener("click", linkToAsset);
 
             openParagraph.appendChild(elem);
