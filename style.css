@@ -306,6 +306,10 @@ button.red:hover {
     filter: brightness(1.1);
 }
 
+img.inline {
+    max-width: 100%;
+}
+
 .pad-top {
     padding-top: 20px;
 }
